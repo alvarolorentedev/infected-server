@@ -1,9 +1,7 @@
 name: CI
-
 on:
   push:
     branches: [ master ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,4 +15,4 @@ jobs:
     - name: Test
       uses: borales/actions-yarn@v2.0.0
       with:
-        cmd: test:cov
+        cmd: test
