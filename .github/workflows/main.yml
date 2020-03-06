@@ -14,10 +14,10 @@ jobs:
       run: npm install
     - name: Test
       run: npm test
-    - name: Deploy
-      uses: "actions/heroku@master"
-      args: |
-        "container:login"
-        "container:push -a cleinly web"
-        "container:release -a cleinly web"
-      secrets: ["HEROKU_API_KEY"]
+    # - name: Deploy
+    #   uses: "actions/heroku@master"
+    #   args: |
+    #     "container:login"
+    #     "container:push -a cleinly web"
+    #     "container:release -a cleinly web"
+    #   secrets: ["HEROKU_API_KEY"]
