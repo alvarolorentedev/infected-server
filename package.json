@@ -1,0 +1,41 @@
+{
+  "name": "cleanly-server",
+  "version": "0.0.1",
+  "description": "server side for cleanly app",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "jest",
+    "test:dev": "jest --watchAll",
+    "test:cov": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "start": " node .",
+    "start:dev": "NODE_ENV=development node ./node_modules/nodemon/bin/nodemon.js ."
+  },
+  "repository": "git@github.com:cleanlyer/cleanly-server.git",
+  "author": "kanekotic <alvarojosepl@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "express-exception-handler": "1.2.8",
+    "helmet": "3.21.3",
+    "mongoose": "5.9.3",
+    "morgan": "1.9.1",
+    "uuid": "7.0.2"
+  },
+  "devDependencies": {
+    "coveralls": "3.0.9",
+    "faker": "4.1.0",
+    "jest": "25.1.0",
+    "nodemon": "2.0.2",
+    "supertest": "4.0.2"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*-test.js"
+    ],
+    "testEnvironment": "node",
+    "automock": false
+  }
+}
