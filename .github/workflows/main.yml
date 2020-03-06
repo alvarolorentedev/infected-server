@@ -16,13 +16,22 @@ jobs:
       run: npm test
     - name: Deploy login
       uses: "actions/heroku@master"
-      args: "container:login"
-      secrets: ["HEROKU_API_KEY"]    
+      with:
+        args: "container:login"
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Deploy push
       uses: "actions/heroku@master"
-      args: "container:push -a cleinly web"
-      secrets: ["HEROKU_API_KEY"]    
+      with:
+        args: "container:push web"
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Deploy release
       uses: "actions/heroku@master"
-      args: "container:release -a cleinly web"
-      secrets: ["HEROKU_API_KEY"]
+      with:
+        args: "container:release web"
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP: ${{ secrets.HEROKU_APP }}
