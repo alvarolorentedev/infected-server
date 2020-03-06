@@ -8,11 +8,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
     - name: Install
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install
+      run: npm install
     - name: Test
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: test
+      run: npm test
+    - name: Deploy
+      uses: "actions/heroku@master"
+      args: |
+        "container:login"
+        "container:push -a cleinly web"
+        "container:release -a cleinly web"
+      secrets: ["HEROKU_API_KEY"]
