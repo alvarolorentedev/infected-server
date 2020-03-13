@@ -1,5 +1,6 @@
 {
     "defaultEnv": "development",
+    "sql-file" : true,
     "development": {
       "driver": "sqlite3",
       "filename": "./local.sqlite"

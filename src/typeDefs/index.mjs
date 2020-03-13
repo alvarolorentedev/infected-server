@@ -1,6 +1,6 @@
 import apollo from 'apollo-server-express'
-import order from './order.js'
-import user from './user.js'
+import order from './order.mjs'
+import user from './user.mjs'
 
 const base = apollo.gql`
     type Query {
