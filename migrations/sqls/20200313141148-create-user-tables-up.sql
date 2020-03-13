@@ -1,4 +1,4 @@
 CREATE TABLE USERS(
-   ID   VARCHAR (36)    NOT NULL,
-   NAME VARCHAR (20)    NOT NULL
+   id   CHAR(36)    NOT NULL,
+   name STRING      NOT NULL
 );

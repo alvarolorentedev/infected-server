@@ -1,10 +1,10 @@
-import express from 'express'
-import apollo from 'apollo-server-express'
-import typeDefs from './typeDefs/index.mjs'
-import dataSource from './dataSources/index.mjs'
-import resolvers from './resolvers/index.mjs'
+import * as express from 'express';
+import {ApolloServer} from 'apollo-server-express'
+import typeDefs from './typeDefs/index'
+import dataSource from './dataSources/index'
+import resolvers from './resolvers/index'
 
-const server = new apollo.ApolloServer(
+const server = new ApolloServer(
     { 
         typeDefs, 
         resolvers,

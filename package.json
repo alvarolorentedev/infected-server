@@ -2,14 +2,15 @@
   "name": "cleanly-server",
   "version": "0.0.1",
   "description": "server side for cleanly app",
-  "main": "src/server.mjs",
+  "main": "src/server.ts",
   "scripts": {
     "test": "jest",
     "test:dev": "jest --watchAll",
     "test:cov": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "start:local": "NODE_ENV=development node --experimental-modules .",
-    "start": "NODE_ENV=production node --experimental-modules .",
-    "start:dev": "NODE_ENV=development node --experimental-modules ./node_modules/nodemon/bin/nodemon.js .",
+    "start:local": "NODE_ENV=development ts-node .",
+    "start": "NODE_ENV=production ts-node .",
+    "start:dev": "NODE_ENV=development ts-node-dev .",
+    "migrate:local:init": "touch local.sqlite && NODE_ENV=development db-migrate up",
     "migrate:local:up": "NODE_ENV=development db-migrate up",
     "migrate:local:down": "NODE_ENV=development db-migrate down"
   },
@@ -19,30 +20,24 @@
   "private": false,
   "dependencies": {
     "apollo-server-express": "2.11.0",
-    "body-parser": "1.19.0",
-    "cors": "2.8.5",
     "datasource-sql": "1.1.1",
     "express": "4.17.1",
-    "express-exception-handler": "1.2.8",
     "graphql": "14.6.0",
-    "helmet": "3.21.3",
-    "mongoose": "5.9.3",
-    "morgan": "1.9.1",
+    "ts-node": "8.6.2",
     "uuid": "7.0.2"
   },
   "devDependencies": {
-    "coveralls": "3.0.9",
     "db-migrate": "^0.11.6",
     "db-migrate-sqlite3": "0.4.0",
     "faker": "4.1.0",
     "jest": "25.1.0",
     "nodemon": "2.0.2",
     "sqlite3": "4.1.1",
-    "supertest": "4.0.2"
+    "typescript": "3.8.3"
   },
   "jest": {
     "testMatch": [
-      "**/test/**/*-test.js"
+      "**/test/**/*.test.js"
     ],
     "testEnvironment": "node",
     "automock": false

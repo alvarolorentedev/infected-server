@@ -1,6 +1,6 @@
-import apollo from 'apollo-server-express'
+import { gql } from 'apollo-server-express'
 
-export default apollo.gql`
+export default gql`
     type User {
         id: String!
         name: String
@@ -10,12 +10,17 @@ export default apollo.gql`
         user(id: String): User
     }
 
+    type UserResponse {
+        success: Boolean!
+        user: User
+    }
+
     extend type Mutation {
         registerUser(
             name: String
-        ): User
+        ): UserResponse!
         deleteUser(
             id: String
-        ): String
+        ): UserResponse!
     }
 `

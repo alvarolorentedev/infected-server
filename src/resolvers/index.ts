@@ -1,4 +1,4 @@
-import user from './user.mjs';
+import user from './user.ts';
 
 const Query = { ...user.Query }
 const Mutation = { ...user.Mutation }

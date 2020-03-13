@@ -1,6 +1,6 @@
-import apollo from 'apollo-server-express'
+import { gql } from 'apollo-server-express'
 
-export default apollo.gql`
+export default gql`
     type Order {
         id: String!
     }

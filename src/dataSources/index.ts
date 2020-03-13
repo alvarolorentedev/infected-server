@@ -1,4 +1,4 @@
-import sqlDatabase from './SqlDatabase.mjs'
+import sqlDatabase from './SqlDatabase'
 
 let sqlAPIConfig = {
     client: "pg",

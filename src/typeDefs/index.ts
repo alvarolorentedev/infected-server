@@ -1,8 +1,8 @@
-import apollo from 'apollo-server-express'
-import order from './order.mjs'
-import user from './user.mjs'
+import { gql } from 'apollo-server-express'
+import order from './order'
+import user from './user'
 
-const base = apollo.gql`
+const base = gql`
     type Query {
         Health: String
     }
