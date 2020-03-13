@@ -1,0 +1,8 @@
+{
+    "defaultEnv": "development",
+    "development": {
+      "driver": "sqlite3",
+      "filename": "./local.sqlite"
+    },
+    "prod": { "ENV": "DATABASE_URL" }
+  }

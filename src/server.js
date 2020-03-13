@@ -1,12 +1,21 @@
-const middlewareBinder = require('./binders/middleware-binder'),
-      routeBinder = require('./binders/route-binder'),
-      port = process.env.PORT || 8080,
-      exceptionHandler = require('express-exception-handler')
+import express from 'express'
+import apollo from 'apollo-server-express'
+import typeDefs from './typeDefs/index.js'
+import dataSource from './dataSources/index.js'
+import resolvers from './resolvers/index.js'
 
-exceptionHandler.handle()
-const app = require('express')()
-middlewareBinder(app)
-routeBinder(app) 
-app.use(exceptionHandler.middleware)
+const server = new apollo.ApolloServer(
+    { 
+        typeDefs, 
+        resolvers,
+        dataSources: () => dataSource,
+        dataplayground: true, 
+        introspection: true 
+    });
 
-app.listen(port)
+const app = express();
+server.applyMiddleware({ app });
+
+app.listen({ port: 8080 }, () =>
+  console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`)
+);
