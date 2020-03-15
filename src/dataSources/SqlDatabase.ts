@@ -1,3 +1,4 @@
+/// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
 
 const MINUTE = 60;
@@ -15,21 +16,21 @@ export default class MyDatabase extends SQLDataSource {
     }
 
     async getUserById(id: string) {
-        return super.db
+        return this.db
             .select("*")
             .from("USERS")
             .where({ id })
             .cache(MINUTE);
     }    
     
-    async createUser({ name: string }) {
+    async createUser({ name }) {
         const id = uuidv4()
-        await super.db("USERS").insert({id , name})
+        await this.db("USERS").insert({id , name})
         return this.getUserById(id)
     } 
 
     async removeUserById(id: string) {
-        return super.db("USERS")
+        return this.db("USERS")
         .where({ id })
         .delete()
     }
