@@ -24,6 +24,7 @@
     "express": "4.17.1",
     "graphql": "14.6.0",
     "ts-node": "8.6.2",
+    "typescript": "3.8.3",
     "uuid": "7.0.2"
   },
   "devDependencies": {
@@ -38,8 +39,7 @@
     "jest": "25.1.0",
     "nodemon": "2.0.2",
     "sqlite3": "4.1.1",
-    "ts-node-dev": "1.0.0-pre.44",
-    "typescript": "3.8.3"
+    "ts-node-dev": "1.0.0-pre.44"
   },
   "jest": {
     "testEnvironment": "node",
