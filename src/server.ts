@@ -1,4 +1,5 @@
 import * as express from 'express'
+import * as auth from 'express-basic-auth'
 import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './typeDefs/index'
 import dataSource from './dataSources/index'
@@ -14,6 +15,9 @@ const server = new ApolloServer(
     });
 
 const app = express();
+app.use(auth({
+  users: { 'admin': 'supersecret' }
+}))
 
 server.applyMiddleware({ app });
 

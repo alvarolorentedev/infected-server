@@ -5,5 +5,5 @@
       "driver": "sqlite3",
       "filename": "./local.sqlite"
     },
-    "prod": { "ENV": "DATABASE_URL" }
+    "production": { "ENV": "DATABASE_URL" }
   }
