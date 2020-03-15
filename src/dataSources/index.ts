@@ -1,6 +1,7 @@
+import { DataSource } from "apollo-datasource"
 import sqlDatabase from './SqlDatabase'
 
-let sqlAPIConfig = {
+let sqlAPIConfig: any = {
     client: "pg",
     connection: process.env.DATABASE_URL
 };
@@ -13,7 +14,7 @@ if(process.env.NODE_ENV !== 'production')
         }
     };
   
-const sqlAPI = new sqlDatabase(sqlAPIConfig);
+const sqlAPI = new sqlDatabase(sqlAPIConfig) as DataSource
   
 export default {
     sqlAPI

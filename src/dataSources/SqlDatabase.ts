@@ -1,4 +1,4 @@
-const { SQLDataSource } = require("datasource-sql")
+import { SQLDataSource } from "datasource-sql"
 
 const MINUTE = 60;
 
@@ -10,23 +10,26 @@ function uuidv4() {
   }
 
 export default class MyDatabase extends SQLDataSource {
+    constructor(config: any){
+        super(config)
+    }
 
-    async getUserById(id) {
-        return this.db
+    async getUserById(id: string) {
+        return super.db
             .select("*")
             .from("USERS")
             .where({ id })
             .cache(MINUTE);
     }    
     
-    async createUser({ name }) {
+    async createUser({ name: string }) {
         const id = uuidv4()
-        await this.db("USERS").insert({id , name})
+        await super.db("USERS").insert({id , name})
         return this.getUserById(id)
     } 
 
-    async removeUserById(id) {
-        return this.db("USERS")
+    async removeUserById(id: string) {
+        return super.db("USERS")
         .where({ id })
         .delete()
     }

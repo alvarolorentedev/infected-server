@@ -1,5 +1,5 @@
-import * as express from 'express';
-import {ApolloServer} from 'apollo-server-express'
+import * as express from 'express'
+import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './typeDefs/index'
 import dataSource from './dataSources/index'
 import resolvers from './resolvers/index'
@@ -9,7 +9,7 @@ const server = new ApolloServer(
         typeDefs, 
         resolvers,
         dataSources: () => dataSource,
-        dataplayground: true, 
+        playground: true,
         introspection: true 
     });
 
