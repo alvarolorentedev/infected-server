@@ -22,6 +22,7 @@
     "apollo-server-express": "2.11.0",
     "datasource-sql": "1.1.1",
     "express": "4.17.1",
+    "express-basic-auth": "1.2.0",
     "graphql": "14.6.0",
     "pg": "7.18.2",
     "ts-node": "8.6.2",
