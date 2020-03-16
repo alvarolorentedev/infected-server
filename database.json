@@ -5,5 +5,13 @@
       "driver": "sqlite3",
       "filename": "./local.sqlite"
     },
-    "production": { "ENV": "DATABASE_URL" }
+    "production": { 
+      "ENV": "DATABASE_URL",
+      "addIfNotExists": {
+        "ssl": true
+      },
+      "overwrite": {
+        "native": true
+      }
+    }
   }
