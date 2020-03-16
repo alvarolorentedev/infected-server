@@ -38,6 +38,7 @@
     "@types/node": "13.9.1",
     "@types/uuid": "7.0.0",
     "db-migrate": "^0.11.6",
+    "db-migrate-pg": "1.0.0",
     "db-migrate-sqlite3": "0.4.0",
     "faker": "4.1.0",
     "jest": "25.1.0",
