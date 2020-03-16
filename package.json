@@ -11,10 +11,10 @@
     "start": "NODE_ENV=production ts-node .",
     "start:dev": "NODE_ENV=development ts-node-dev .",
     "migrate:local:init": "touch local.sqlite && NODE_ENV=development db-migrate up",
-    "migrate:local:up": "NODE_ENV=development db-migrate up",
-    "migrate:remote:up": "NODE_ENV=production db-migrate up",
-    "migrate:local:down": "NODE_ENV=development db-migrate down",
-    "migrate:remote:down": "NODE_ENV=production db-migrate down"
+    "migrate:local:up": "db-migrate up -e development",
+    "migrate:remote:up": "db-migrate up -e production",
+    "migrate:local:down": "db-migrate down -e development",
+    "migrate:remote:down": "db-migrate down -e production"
   },
   "repository": "git@github.com:cleanlyer/cleanly-server.git",
   "author": "kanekotic <alvarojosepl@gmail.com>",
