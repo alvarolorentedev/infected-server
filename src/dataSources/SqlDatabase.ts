@@ -16,11 +16,11 @@ export default class MyDatabase extends SQLDataSource {
     }
 
     async getUserById(id: string) {
-        return this.db
+        return (await this.db
             .select("*")
             .from("USERS")
             .where({ id })
-            .cache(MINUTE);
+            .cache(MINUTE))[0];
     }    
     
     async createUser({ name }) {

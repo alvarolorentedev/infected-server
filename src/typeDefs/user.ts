@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express'
 export default gql`
     type User {
         id: String!
-        name: String
+        username: String
     }
 
     extend type Query {
@@ -11,8 +11,8 @@ export default gql`
     }
 
     type UserResponse {
-        success: Boolean!
-        user: User
+        result: String!
+        id: String
     }
 
     extend type Mutation {
