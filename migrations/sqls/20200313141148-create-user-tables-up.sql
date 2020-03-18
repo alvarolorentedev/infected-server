@@ -1,4 +1,4 @@
 CREATE TABLE USERS(
    id   CHAR(36)    NOT NULL,
-   name STRING      NOT NULL
+   name TEXT      NOT NULL
 );

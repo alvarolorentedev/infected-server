@@ -1,7 +1,7 @@
 {
-  "name": "cleanly-server",
+  "name": "infected-server",
   "version": "0.0.1",
-  "description": "server side for cleanly app",
+  "description": "server side for infected app",
   "main": "src/server.ts",
   "scripts": {
     "test": "jest",
@@ -16,7 +16,7 @@
     "migrate:local:down": "db-migrate down -e development",
     "migrate:remote:down": "db-migrate down -e production"
   },
-  "repository": "git@github.com:cleanlyer/cleanly-server.git",
+  "repository": "git@github.com:infecteder/infected-server.git",
   "author": "kanekotic <alvarojosepl@gmail.com>",
   "license": "MIT",
   "private": false,
