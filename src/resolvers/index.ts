@@ -1,4 +1,4 @@
-import user from './user'
+import user from './game'
 
 const Query = { ...user.Query }
 const Mutation = { ...user.Mutation }

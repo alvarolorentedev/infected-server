@@ -1,37 +1,24 @@
 /// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
+import { v4 } from "uuid"
 
-const MINUTE = 60;
-
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
-
+const MINUTE = 60
 export default class MyDatabase extends SQLDataSource {
     constructor(config: any){
         super(config)
     }
 
-    async getUserById(id: string) {
+    async getGameById(id: string) {
         return (await this.db
             .select("*")
-            .from("USERS")
+            .from("GAME")
             .where({ id })
-            .cache(MINUTE))[0];
+            .cache(MINUTE))[0]
     }    
     
-    async createUser({ name }) {
-        const id = uuidv4()
-        await this.db("USERS").insert({id , name})
-        return this.getUserById(id)
+    async createGame() {
+        const id = v4()
+        await this.db("GAME").insert({id})
+        return id
     } 
-
-    async removeUserById(id: string) {
-        return this.db("USERS")
-        .where({ id })
-        .delete()
-    }
 }

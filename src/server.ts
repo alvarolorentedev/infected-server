@@ -12,15 +12,15 @@ const server = new ApolloServer(
         dataSources: () => dataSource,
         playground: true,
         introspection: true 
-    });
+    })
 
-const app = express();
+const app = express()
 app.use(auth({
   users: { 'admin': 'supersecret' }
 }))
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app })
 
 app.listen({ port: process.env.PORT || 8080 }, () =>
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT || "8080"}${server.graphqlPath}`)
-);
+)

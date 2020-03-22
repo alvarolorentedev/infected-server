@@ -1,4 +1,4 @@
-import MyDatabase from "../dataSources/SqlDatabase";
+import MyDatabase from "../dataSources/SqlDatabase"
 
 /**
  * This is a command, this is used to generate side-effects on the system. For example, writing to a database or to a queue.
@@ -10,7 +10,7 @@ import MyDatabase from "../dataSources/SqlDatabase";
  * @param dataSource DB with normalized information
  * @param username Username of the user to create
  */
-export default async function createUser(dataSource: MyDatabase, username: string): Promise<{ result: 'ok' | 'err', id: string | null }> {
-    const user = await dataSource.createUser({ name: username })
-    return { result: 'ok', id: user.id }
+export default async function createUser(dataSource: MyDatabase): Promise<{ result: 'ok' | 'err', id: string | null }> {
+    const id = await dataSource.createGame()
+    return { result: 'ok', id }
 }

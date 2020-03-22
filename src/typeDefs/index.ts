@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server-express'
-import order from './order'
-import user from './user'
+import game from './game'
 
 const base = gql`
     type Query {
@@ -12,4 +11,4 @@ const base = gql`
     }
 `
 
-export default [base,order,user]
+export default [base,game]

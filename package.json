@@ -14,7 +14,8 @@
     "migrate:local:up": "db-migrate up -e development",
     "migrate:remote:up": "db-migrate up -e production",
     "migrate:local:down": "db-migrate down -e development",
-    "migrate:remote:down": "db-migrate down -e production"
+    "migrate:remote:down": "db-migrate down -e production",
+    "migrate:create": "db-migrate create"
   },
   "repository": "git@github.com:infecteder/infected-server.git",
   "author": "kanekotic <alvarojosepl@gmail.com>",
