@@ -8,7 +8,7 @@
     "test:dev": "jest --watchAll",
     "test:cov": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "start:local": "NODE_ENV=development ts-node .",
-    "start": "NODE_ENV=production ts-node .",
+    "start": "NODE_ENV=development touch ./local.sqlite && db-migrate up -e development && ts-node .",
     "start:dev": "NODE_ENV=development ts-node-dev .",
     "migrate:local:init": "touch local.sqlite && NODE_ENV=development db-migrate up",
     "migrate:local:up": "db-migrate up -e development",
