@@ -1,5 +1,5 @@
-import MyDatabase from "../dataSources/SqlDatabase"
+import sqlDatabase from "../dataSources/SqlDatabase"
 
-export default async function gameWithId(dataSource: MyDatabase, id: string): Promise<{ result: 'ok' | 'not-found', user: any }> {
+export default async function gameWithId(dataSource: sqlDatabase, id: string): Promise<{ result: 'ok' | 'not-found', user: any }> {
     return await dataSource.getGameById(id)
 }

@@ -3,7 +3,7 @@ import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
 
 const MINUTE = 60
-export default class MyDatabase extends SQLDataSource {
+export default class sqlDatabase extends SQLDataSource {
     constructor(config: any){
         super(config)
     }
