@@ -10,15 +10,15 @@ export default class sqlDatabase extends SQLDataSource {
 
     async getGameById(id: string) {
         return (await this.db
-            .select("*")
-            .from("GAME")
+            .select('*')
+            .from('GAME')
             .where({ id })
             .cache(MINUTE))[0]
     }    
     
     async createGame() {
         const id = v4()
-        await this.db("GAME").insert({id})
+        await this.db('GAME').insert({id})
         return id
     } 
 }
