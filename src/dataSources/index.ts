@@ -3,7 +3,8 @@ import sqlDatabase from './SqlDatabase'
 
 let sqlAPIConfig: any = {
     client: "pg",
-    connection: process.env.DATABASE_URL
+    connection: process.env.DATABASE_URL,
+    searchPath: ['salesforce', 'public']
 };
 
 if(process.env.NODE_ENV !== 'production')
