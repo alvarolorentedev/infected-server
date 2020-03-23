@@ -5,10 +5,12 @@ describe('createGame', () => {
     const sqlDataSource = {
         createGame: jest.fn(),
     }
+
     describe('generates game correctly', () => {
         let result
         let expectedId = faker.random.uuid()
         beforeAll(async () => {
+            sqlDataSource.createGame.mockReset()
             sqlDataSource.createGame.mockResolvedValue(expectedId)
             //@ts-ignore
             result = await createGame(sqlDataSource)
@@ -19,6 +21,25 @@ describe('createGame', () => {
         
         test('should return success response with expected id', () => {
             expect(result).toEqual({success: true, id: expectedId})
+        });
+        
+    });    
+    
+    describe('error creating game', () => {
+        let result
+        let expectedId = faker.random.uuid()
+        beforeAll(async () => {
+            sqlDataSource.createGame.mockReset()
+            sqlDataSource.createGame.mockRejectedValue(expectedId)
+            //@ts-ignore
+            result = await createGame(sqlDataSource)
+        });
+        test('should call database', () => {
+            expect(sqlDataSource.createGame).toHaveBeenCalled()
+        });        
+        
+        test('should return success response with expected id', () => {
+            expect(result).toEqual({success: false})
         });
         
     });

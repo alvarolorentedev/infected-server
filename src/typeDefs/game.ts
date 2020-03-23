@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express'
 
 export type GameCreateResponse = {
     success: boolean,
-    id: string
+    id?: string
 }
 
 export type Game = {
