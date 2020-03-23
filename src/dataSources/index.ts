@@ -1,5 +1,9 @@
 import { DataSource } from "apollo-datasource"
 import sqlDatabase from './SqlDatabase'
+import Formatter from 'knex/lib/formatter'
+
+Formatter.prototype.wrapAsIdentifier = value => `"${(value || '').replace(/FROM\s\"(\w+)\"/g, 'FROM $1')}"`
+
 
 let sqlAPIConfig: any = {
     client: "pg",
