@@ -18,7 +18,7 @@ export default class sqlDatabase extends SQLDataSource {
     
     async createGame() {
         const id = v4()
-        await this.db('GAME').insert({id})
+        await this.db.insert({id}).into('GAME')
         return id
     } 
 }
