@@ -15,9 +15,9 @@ const server = new ApolloServer(
     })
 
 const app = express()
-// app.use(auth({
-//   users: { 'admin': 'supersecret' }
-// }))
+app.use(auth({
+  users: { 'admin': 'supersecret' }
+}))
 
 server.applyMiddleware({ app })
 
