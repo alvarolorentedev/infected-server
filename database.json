@@ -9,6 +9,9 @@
       "ENV": "DATABASE_URL",
       "addIfNotExists": {
         "ssl": true
+      },
+      "overwrite": {
+        "native": true
       }
     }
   }
