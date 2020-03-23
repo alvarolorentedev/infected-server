@@ -1,6 +1,7 @@
 /// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
+import { Game } from '../typeDefs/game';
 
 const MINUTE = 60
 export default class sqlDatabase extends SQLDataSource {
@@ -8,7 +9,7 @@ export default class sqlDatabase extends SQLDataSource {
         super(config)
     }
 
-    async getGameById(id: string) {
+    public async getGameById(id: string): Promise<Game> {
         return (await this.db
             .select('*')
             .from('GAME')
@@ -16,7 +17,7 @@ export default class sqlDatabase extends SQLDataSource {
             .cache(MINUTE))[0]
     }    
     
-    async createGame() {
+    public async createGame(): Promise<string> {
         const id = v4()
         await this.db.insert({id}).into('GAME')
         return id

@@ -18,7 +18,7 @@ describe('createGame', () => {
         });        
         
         test('should return success response with expected id', () => {
-            expect(result).toEqual({result: 'ok', id: expectedId})
+            expect(result).toEqual({success: true, id: expectedId})
         });
         
     });
