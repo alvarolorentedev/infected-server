@@ -1,6 +1,7 @@
 import * as express from 'express'
 import * as auth from 'express-basic-auth'
 import { ApolloServer } from 'apollo-server-express'
+import * as cors from "cors"
 import typeDefs from './typeDefs/index'
 import dataSource from './dataSources/index'
 import resolvers from './resolvers/index'
@@ -15,6 +16,7 @@ const server = new ApolloServer(
     })
 
 const app = express()
+app.use(cors())
 app.use(auth({
   users: { 'admin': 'supersecret' }
 }))
