@@ -13,8 +13,7 @@ if(process.env.NODE_ENV !== 'production')
         client: "sqlite3",
         connection: {
             filename: "./local.sqlite"
-        },
-        wrapIdentifier: (value) => value
+        }
     };
   
 const sqlAPI = new sqlDatabase(sqlAPIConfig) as DataSource
