@@ -1,7 +1,7 @@
 /// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
-import { Game } from '../typeDefs/game';
+import { Game } from '../typeDefs/game'
 
 const MINUTE = 60
 export default class sqlDatabase extends SQLDataSource {
