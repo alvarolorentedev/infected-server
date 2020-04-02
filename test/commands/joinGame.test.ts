@@ -7,29 +7,28 @@ jest.mock('../../src/utils/logger', () => ({
     }
 }))
 
-import createGame from "../../src/commands/createGame"
+import joinGame from "../../src/commands/joinGame"
 import * as faker from "faker"
 
-describe('createGame', () => {
+describe('joinGame', () => {
     const sqlDataSource = {
-        createGame: jest.fn(),
+        joinGame: jest.fn(),
     }
 
     describe('generates game correctly', () => {
         let result
-        let expectedId = faker.random.uuid()
         beforeAll(async () => {
-            sqlDataSource.createGame.mockReset()
-            sqlDataSource.createGame.mockResolvedValue(expectedId)
+            sqlDataSource.joinGame.mockReset()
+            sqlDataSource.joinGame.mockResolvedValue(undefined)
             //@ts-ignore
-            result = await createGame(sqlDataSource)
+            result = await joinGame(sqlDataSource)
         });
         test('should call database', () => {
-            expect(sqlDataSource.createGame).toHaveBeenCalled()
+            expect(sqlDataSource.joinGame).toHaveBeenCalled()
         });        
         
         test('should return success response with expected id', () => {
-            expect(result).toEqual({success: true, id: expectedId})
+            expect(result).toEqual({success: true})
         });
         
     });    
@@ -38,14 +37,14 @@ describe('createGame', () => {
         let result
         const expectedError = faker.random.uuid()
         beforeAll(async () => {
-            sqlDataSource.createGame.mockReset()
-            sqlDataSource.createGame.mockRejectedValue(expectedError)
+            sqlDataSource.joinGame.mockReset()
             mockErrorLogger.mockReset()
+            sqlDataSource.joinGame.mockRejectedValue(expectedError)
             //@ts-ignore
-            result = await createGame(sqlDataSource)
+            result = await joinGame(sqlDataSource)
         });
         test('should call database', () => {
-            expect(sqlDataSource.createGame).toHaveBeenCalled()
+            expect(sqlDataSource.joinGame).toHaveBeenCalled()
         });        
         
         test('should call error logger with error', () => {

@@ -21,5 +21,9 @@ export default class sqlDatabase extends SQLDataSource {
         const id = v4()
         await this.db.insert({id}).into('GAME')
         return id
+    }
+
+    public async joinGame(): Promise<void> {
+        throw "Not Implemented";
     } 
 }

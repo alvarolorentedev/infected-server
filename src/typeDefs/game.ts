@@ -5,6 +5,10 @@ export type GameCreateResponse = {
     id?: string
 }
 
+export type GameJoinResponse = {
+    success: boolean
+}
+
 export type Game = {
     id: string
 }
