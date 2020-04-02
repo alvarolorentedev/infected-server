@@ -1,4 +1,5 @@
 import createGame from '../commands/createGame'
+import joinGame from '../commands/joinGame'
 import gameWithId from '../queries/gameWithId'
 
 export default {
@@ -6,6 +7,7 @@ export default {
         game: async (_, { id }, { dataSources }) => await gameWithId(dataSources.sqlAPI, id)
     },
     Mutation: {
-        createGame: async (_, __, { dataSources }) => await createGame(dataSources.sqlAPI)
+        createGame: async (_, __, { dataSources }) => await createGame(dataSources.sqlAPI),
+        joinGame: async (_, { gameId, userId }, { dataSources }) => await joinGame(dataSources.sqlAPI, gameId, userId)
     }
   }
