@@ -41,5 +41,6 @@ export default gql`
 
     extend type Mutation {
         createGame: GameCreateResponse!
+        joinGame(gameId: String!, userId: String!): GameJoinResponse!
     }
 `
