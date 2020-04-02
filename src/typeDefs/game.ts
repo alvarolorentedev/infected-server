@@ -9,8 +9,14 @@ export type GameJoinResponse = {
     success: boolean
 }
 
+export type Player = {
+    name: string
+}
+
 export type Game = {
-    id: string
+    id: string,
+    status: string
+    players: Player[]
 }
 
 export default gql`

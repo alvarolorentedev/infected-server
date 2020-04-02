@@ -3,27 +3,31 @@ import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
 import { Game } from '../typeDefs/game'
 
-const MINUTE = 60
 export default class sqlDatabase extends SQLDataSource {
     constructor(config: any){
         super(config)
     }
 
     public async getGameById(id: string): Promise<Game> {
-        return (await this.db
+        const queryResult = (await this.db
             .select('*')
             .from('GAME')
-            .where({ id })
-            .cache(MINUTE))[0]
+            .where({ id }))[0]
+        return JSON.parse(queryResult.status)
     }    
     
     public async createGame(): Promise<string> {
         const id = v4()
-        await this.db.insert({id}).into('GAME')
+        const status = JSON.stringify({ id, status: "NOT_STARTED", players: [] })
+        await this.db.insert({id, status}).into('GAME')
         return id
     }
 
-    public async joinGame(): Promise<void> {
-        throw "Not Implemented";
+    public async joinGame(gameId: string, userId: string): Promise<void> {
+        const gameStatus = await this.getGameById(gameId)
+        if(gameStatus.players.some(player => player.name === userId ))
+            throw new Error("This player is already in the game")
+        gameStatus.players.push({name: userId})
+        await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
     } 
 }
