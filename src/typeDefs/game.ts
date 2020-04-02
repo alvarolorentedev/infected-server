@@ -20,8 +20,14 @@ export type Game = {
 }
 
 export default gql`
+    type Player {
+        name: String!
+    }
+
     type Game {
         id: String!
+        status: String!
+        players: [Player!]!
     }
 
     extend type Query {
