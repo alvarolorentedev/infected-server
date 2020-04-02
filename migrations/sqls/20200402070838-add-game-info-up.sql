@@ -1,0 +1,1 @@
+ALTER TABLE GAME ADD state TEXT;
