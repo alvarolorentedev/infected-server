@@ -1,7 +1,8 @@
 /// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
-import { Game } from '../typeDefs/game'
+import { Game, Card, PlayerStatus, GameStatus } from '../typeDefs/game'
+import deal from "../utils/deal"
 
 export default class sqlDatabase extends SQLDataSource {
     constructor(config: any){
@@ -18,7 +19,7 @@ export default class sqlDatabase extends SQLDataSource {
     
     public async createGame(): Promise<string> {
         const id = v4()
-        const status = JSON.stringify({ id, status: "NOT_STARTED", players: [] })
+        const status = JSON.stringify({ id, status: GameStatus.NotStarted, players: [] })
         await this.db.insert({id, status}).into('GAME')
         return id
     }
@@ -27,7 +28,8 @@ export default class sqlDatabase extends SQLDataSource {
         const gameStatus = await this.getGameById(gameId)
         if(gameStatus.players.some(player => player.name === userId ))
             throw new Error("This player is already in the game")
-        gameStatus.players.push({name: userId})
+        const infected = gameStatus.players.filter(player => player.card === Card.Infected).length
+        gameStatus.players.push({ name: userId, status: PlayerStatus.Free, card: deal({ infected, total: gameStatus.players.length}) })
         await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
     } 
 }

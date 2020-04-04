@@ -1,5 +1,21 @@
 import { gql } from 'apollo-server-express'
 
+export enum Card {
+    Infected,
+    Healthy
+}
+
+export enum PlayerStatus {
+    Free,
+    Quarentained
+}
+
+export enum GameStatus {
+    NotStarted,
+    Started,
+    Ended
+}
+
 export type GameCreateResponse = {
     success: boolean,
     id?: string
@@ -10,23 +26,43 @@ export type GameJoinResponse = {
 }
 
 export type Player = {
-    name: string
+    name: string,
+    card: Card,
+    status: PlayerStatus
 }
 
 export type Game = {
     id: string,
-    status: string
+    status: GameStatus
     players: Player[]
 }
 
 export default gql`
+    enum Card {
+        Infected
+        Healthy
+    }
+
+    enum PlayerStatus {
+        Free
+        Quarentained
+    }
+
+    enum GameStatus {
+        NotStarted
+        Started
+        Ended
+    }
+
     type Player {
         name: String!
+        card: Card!
+        status: PlayerStatus!
     }
 
     type Game {
         id: String!
-        status: String!
+        status: GameStatus!
         players: [Player!]!
     }
 
