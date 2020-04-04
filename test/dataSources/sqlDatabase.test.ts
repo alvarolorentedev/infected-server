@@ -24,6 +24,10 @@ describe('sqlDatabase', () => {
           })
     });
 
+    afterAll(() => {
+        subject.db.destroy()
+    });
+
     describe('generates game correctly', () => {
         let gameId: string
         let userId: string = faker.random.uuid()
