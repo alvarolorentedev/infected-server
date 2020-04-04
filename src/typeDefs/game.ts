@@ -1,19 +1,19 @@
 import { gql } from 'apollo-server-express'
 
 export enum Card {
-    Infected,
-    Healthy
+    Infected = "Infected",
+    Healthy = "Healthy"
 }
 
 export enum PlayerStatus {
-    Free,
-    Quarentained
+    Free = "Free",
+    Quarentained = "Quarentained"
 }
 
 export enum GameStatus {
-    NotStarted,
-    Started,
-    Ended
+    NotStarted = "NotStarted",
+    Started = "Started",
+    Ended = "Ended"
 }
 
 export type GameCreateResponse = {
