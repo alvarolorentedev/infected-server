@@ -35,13 +35,12 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
-    - name: Setup Integration Environment File
+    - name: Setup Integration
       run: node ./postman/replaceFileFromEnvironment.js
       env:
         SERVICE_USERNAME: ${{ secrets.SERVICE_USERNAME }}
         SERVICE_PASSWORD: ${{ secrets.SERVICE_PASSWORD }}
-      run: npm install
-    - Name: Integration Test
+    - Name: Run Integration
       uses: matt-ball/newman-action@master
       with:
         collection: postman/infecteed.postman_collection.json
