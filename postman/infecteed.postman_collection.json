@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "191e081e-b540-45ad-a67f-c2ea86fddd22",
+		"name": "infecteed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mutations",
+			"item": [
+				{
+					"name": "create game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33c6960d-983b-4742-8dc8-f8fb12aeea09",
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test(\"is expected response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.createGame.success).to.eql(true);",
+									"    pm.environment.set(\"gameId\", jsonData.data.createGame.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  createGame{\n    success,\n    id\n  }\n}",
+								"variables": ""
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "join game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b29f2526-f9f6-4aeb-8b12-614519bf7b64",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test(\"is expected response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.joinGame.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e368e3d1-0eae-4241-ad1a-a933ccfbef8a",
+								"exec": [
+									"var uuid = require('uuid');",
+									"pm.environment.set(\"userId\", uuid.v4());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "{{gameid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation($gameId: String!, $userId: String!){\n  joinGame(gameId: $gameId, userId: $userId){ \n      success\n  }\n}",
+								"variables": "{\n    \"gameId\": \"{{gameId}}\",\n    \"userId\": \"{{userId}}\"\n}"
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "44202689-594a-48a2-a2bf-9e14ea83b63b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "53fa035e-e5b2-454c-a97e-78513edb372a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Query",
+			"item": [
+				{
+					"name": "game by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33c6960d-983b-4742-8dc8-f8fb12aeea09",
+								"exec": [
+									"var gameId = pm.environment.get(\"gameId\");",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test(\"is expected response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.game.id).to.eql(gameId);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a04005c1-3596-4eee-b3bf-21af03babe86",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query($gameId: String!){\n  game(id: $gameId){\n    id,\n    status,\n    players {\n        name,\n        card,\n        status\n    }\n  }\n}",
+								"variables": "{\n    \"gameId\": \"{{gameId}}\"\n}"
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
