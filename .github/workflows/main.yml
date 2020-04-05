@@ -40,7 +40,7 @@ jobs:
       env:
         SERVICE_USERNAME: ${{ secrets.SERVICE_USERNAME }}
         SERVICE_PASSWORD: ${{ secrets.SERVICE_PASSWORD }}
-    - Name: Run Integration
+    - name: Run Integration
       uses: matt-ball/newman-action@master
       with:
         collection: postman/infecteed.postman_collection.json
