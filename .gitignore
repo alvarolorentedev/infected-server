@@ -104,3 +104,4 @@ dist
 .tern-port
 
 local.sqlite
+postman/smoke.postman_environment.json

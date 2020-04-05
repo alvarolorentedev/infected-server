@@ -9,7 +9,7 @@ describe('dealer', () => {
         jest.spyOn(global.Math, 'random').mockReturnValue(fakeRandom)
         expect(deal({infected: 0, total: 0 })).toBe(expectEnum)
         //@ts-ignore
-        global.Math.random.mockRestore();
+        global.Math.random.mockRestore()
       })
 
       test.each([
@@ -21,6 +21,6 @@ describe('dealer', () => {
         [2, 11, Card.Infected]
       ])('if %d infected and %d infected should return %d card', (infected, total, expectEnum) => {
         expect(deal({infected, total })).toBe(expectEnum)
-      });
+      })
       
 })

@@ -29,14 +29,14 @@ describe('game resolvers', () => {
         mockCreateGame.mockReset()
         mockJoinGame.mockReset()
         mockGameWithId.mockReset()
-    });
+    })
 
     describe('Query', () => {
 
         test('should have query to game that calls sqlDatabase with parameters', async () => {
             await resolvers.Query.game(undefined, { id: gameId }, { dataSources })
             expect(mockGameWithId).toHaveBeenCalledWith(dataSources.sqlAPI, gameId)
-        });
+        })
     })
 
     describe('mutations', () => {
@@ -44,11 +44,11 @@ describe('game resolvers', () => {
             await resolvers.Mutation.createGame(undefined, undefined, { dataSources })
             expect(mockCreateGame).toHaveBeenCalledWith(dataSources.sqlAPI)
 
-        });
+        })
         test('should have join game that calls sqlDatabase with parameters', async () => {
             await resolvers.Mutation.joinGame(undefined, { gameId, userId }, { dataSources })
             expect(mockJoinGame).toHaveBeenCalledWith(dataSources.sqlAPI, gameId, userId)
-        });
+        })
         
-    });
+    })
 })

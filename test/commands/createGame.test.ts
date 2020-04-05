@@ -23,16 +23,16 @@ describe('createGame', () => {
             sqlDataSource.createGame.mockResolvedValue(expectedId)
             //@ts-ignore
             result = await createGame(sqlDataSource)
-        });
+        })
         test('should call database', () => {
             expect(sqlDataSource.createGame).toHaveBeenCalled()
-        });        
+        })        
         
         test('should return success response with expected id', () => {
             expect(result).toEqual({success: true, id: expectedId})
-        });
+        })
         
-    });    
+    })    
     
     describe('error creating game', () => {
         let result
@@ -43,18 +43,18 @@ describe('createGame', () => {
             mockErrorLogger.mockReset()
             //@ts-ignore
             result = await createGame(sqlDataSource)
-        });
+        })
         test('should call database', () => {
             expect(sqlDataSource.createGame).toHaveBeenCalled()
-        });        
+        })        
         
         test('should call error logger with error', () => {
             expect(mockErrorLogger).toHaveBeenCalledWith(expectedError)
-        });        
+        })        
         
         test('should return success response with expected id', () => {
             expect(result).toEqual({success: false})
-        });
+        })
         
-    });
+    })
 })

@@ -15,18 +15,18 @@ describe('sqlDatabase', () => {
         connection: {
             filename: ":memory:"
         }
-    };
+    }
     let subject = new sqlDatabase(config)
     beforeAll(async () => {
         await subject.db.schema.createTable('GAME', (table) => {
             table.string("id", 36)
             table.text("status")
           })
-    });
+    })
 
     afterAll(() => {
         subject.db.destroy()
-    });
+    })
 
     describe('generates game correctly', () => {
         let gameId: string
@@ -35,13 +35,13 @@ describe('sqlDatabase', () => {
         test('should return an id', async () => {
             gameId = await subject.createGame()
             expect(gameId).toBeTruthy()
-        });
+        })
 
         test('should be able to join existing game', async () => {
             mockDeal.mockReturnValue(Card.Infected)
             await subject.joinGame(gameId, userId)
             expect(mockDeal).toHaveBeenCalledWith({infected: 0, total: 0})
-        });
+        })
 
         test('should not allow to join with the same userId', async () => {
             try {
@@ -49,13 +49,13 @@ describe('sqlDatabase', () => {
                 fail()
             } catch (_) {
             }
-        });
+        })
 
         test('should allow to join with other same userId', async () => {
             mockDeal.mockReturnValue(Card.Healthy)
             await subject.joinGame(gameId, userId2)
             expect(mockDeal).toHaveBeenCalledWith({infected: 1, total: 1})
-        });
+        })
 
         test('should be able to return game with correct data', async () => {
             const game = await subject.getGameById(gameId)
@@ -63,6 +63,6 @@ describe('sqlDatabase', () => {
             expect(game.status).toEqual(GameStatus.NotStarted)
             expect(game.players[0]).toEqual({name: userId, status: PlayerStatus.Free, card: Card.Infected})
             expect(game.players[1]).toEqual({name: userId2, status: PlayerStatus.Free, card: Card.Healthy})
-        });
+        })
     })
 })

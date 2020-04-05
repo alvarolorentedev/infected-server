@@ -6,7 +6,7 @@ let sqlAPIConfig: any = {
     connection: process.env.DATABASE_URL,
     searchPath: ['salesforce', 'public'],
     wrapIdentifier: (value) => value
-};
+}
 
 if(process.env.NODE_ENV !== 'production')
     sqlAPIConfig = {
@@ -14,7 +14,7 @@ if(process.env.NODE_ENV !== 'production')
         connection: {
             filename: "./local.sqlite"
         }
-    };
+    }
   
 const sqlAPI = new sqlDatabase(sqlAPIConfig) as DataSource
   

@@ -24,16 +24,16 @@ describe('joinGame', () => {
             sqlDataSource.joinGame.mockResolvedValue(undefined)
             //@ts-ignore
             result = await joinGame(sqlDataSource, gameId, userId)
-        });
+        })
         test('should call database', () => {
             expect(sqlDataSource.joinGame).toHaveBeenCalledWith(gameId, userId)
-        });        
+        })        
         
         test('should return success response with expected id', () => {
             expect(result).toEqual({success: true})
-        });
+        })
         
-    });    
+    })    
     
     describe('error creating game', () => {
         let result
@@ -46,18 +46,18 @@ describe('joinGame', () => {
             sqlDataSource.joinGame.mockRejectedValue(expectedError)
             //@ts-ignore
             result = await joinGame(sqlDataSource, gameId, userId)
-        });
+        })
         test('should call database', () => {
             expect(sqlDataSource.joinGame).toHaveBeenCalledWith(gameId, userId)
-        });        
+        })        
         
         test('should call error logger with error', () => {
             expect(mockErrorLogger).toHaveBeenCalledWith(expectedError)
-        });        
+        })        
         
         test('should return success response with expected id', () => {
             expect(result).toEqual({success: false})
-        });
+        })
         
-    });
+    })
 })
