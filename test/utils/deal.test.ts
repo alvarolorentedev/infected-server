@@ -1,5 +1,5 @@
 import deal from '../../src/utils/deal'
-import { Card } from '../../src/typeDefs/game'
+import { Card } from '../../src/types/card';
 
 describe('dealer', () => {
     test.each([

@@ -1,6 +1,6 @@
 import sqlDatabase from "../dataSources/SqlDatabase"
-import { GameJoinResponse } from "../types/gameJoinResponse"
 import logger from '../utils/logger'
+import { GameJoinResponse } from '../types/gameJoinResponse'
 
 export default async function joinGame(dataSource: sqlDatabase, gameId: string, userId: string): Promise<GameJoinResponse> {
     try {

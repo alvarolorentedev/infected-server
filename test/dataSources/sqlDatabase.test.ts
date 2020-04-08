@@ -6,8 +6,10 @@ jest.mock('../../src/utils/deal', () => ({
 }))
 
 import sqlDatabase from '../../src/dataSources/SqlDatabase'
-import { Card, PlayerStatus, GameStatus } from '../../src/typeDefs/game'
 import * as faker from "faker"
+import { Card } from '../../src/types/card'
+import { GameStatus } from '../../src/types/gameStatus';
+import { PlayerStatus } from '../../src/types/playerStatus';
 
 describe('sqlDatabase', () => {
     const config = {
