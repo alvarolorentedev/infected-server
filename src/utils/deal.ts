@@ -1,4 +1,4 @@
-import { Card } from '../typeDefs/game'
+import { Card } from "../types/card"
 
 type cardSpread = {
     infected: number,

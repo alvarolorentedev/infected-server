@@ -1,0 +1,8 @@
+# import Card from "card.graphql"
+# import PlayerStatus from "playerStatus.graphql"
+
+type Player {
+    name: String!
+    card: Card!
+    status: PlayerStatus!
+}

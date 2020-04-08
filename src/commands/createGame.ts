@@ -1,5 +1,5 @@
 import sqlDatabase from "../dataSources/SqlDatabase"
-import { GameCreateResponse } from '../typeDefs/game'
+import { GameCreateResponse } from "../types/gameCreateResponse"
 import logger from '../utils/logger'
 
 export default async function createGame(dataSource: sqlDatabase): Promise<GameCreateResponse> {

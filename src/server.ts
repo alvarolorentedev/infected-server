@@ -2,14 +2,15 @@ import * as express from 'express'
 import * as auth from 'express-basic-auth'
 import { ApolloServer } from 'apollo-server-express'
 import * as cors from "cors"
-import typeDefs from './typeDefs/index'
 import dataSource from './dataSources/index'
 import resolvers from './resolvers/index'
 import logger from './utils/logger'
 import * as morgan from "morgan"
+import { importSchema } from 'graphql-import'
+import { gql } from 'apollo-server-express'
 
 const server = new ApolloServer({ 
-    typeDefs, 
+    typeDefs: gql(importSchema(`${__dirname}/schemas/schemas.graphql`)),
     resolvers,
     dataSources: () => dataSource,
     playground: true,
@@ -27,7 +28,7 @@ const app = express()
 app.use(cors())
 app.use(auth({
   users: { 'admin': 'supersecret' }
-}))
+})) 
 app.use(morgan('tiny', { stream }))
 
 server.applyMiddleware({ app })

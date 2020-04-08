@@ -1,0 +1,12 @@
+# import Game from "game.graphql"
+# import GameCreateResponse from "gameCreateResponse.graphql"
+# import GameJoinResponse from "gameJoinResponse.graphql"
+
+type Query {
+    game(id: String): Game
+}
+
+type Mutation {
+    createGame: GameCreateResponse!
+    joinGame(gameId: String!, userId: String!): GameJoinResponse!
+}

@@ -1,0 +1,4 @@
+type GameCreateResponse {
+    success: Boolean!
+    id: String
+}

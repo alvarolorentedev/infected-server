@@ -1,7 +1,10 @@
 /// <reference types="../../types/index" />
 import { SQLDataSource } from "datasource-sql"
 import { v4 } from "uuid"
-import { Game, Card, PlayerStatus, GameStatus } from '../typeDefs/game'
+import { Card } from "../types/card"
+import { PlayerStatus } from "../types/playerStatus"
+import { GameStatus } from "../types/gameStatus"
+import { Game } from "../types/game"
 import deal from "../utils/deal"
 
 export default class sqlDatabase extends SQLDataSource {
