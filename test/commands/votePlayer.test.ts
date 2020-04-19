@@ -19,15 +19,16 @@ describe('votePlayer', () => {
     describe('start game correctly', () => {
         let result
         let gameId = faker.random.uuid()
-        let userId = faker.random.uuid()
+        let from = faker.random.uuid()
+        let to = faker.random.uuid()
         beforeAll(async () => {
             sqlDataSource.votePlayer.mockReset()
             sqlDataSource.votePlayer.mockResolvedValue(undefined)
             //@ts-ignore
-            result = await votePlayer(sqlDataSource, gameId, userId)
+            result = await votePlayer(sqlDataSource, gameId, from, to)
         })
         test('should call database', () => {
-            expect(sqlDataSource.votePlayer).toHaveBeenCalledWith(gameId, userId)
+            expect(sqlDataSource.votePlayer).toHaveBeenCalledWith(gameId, from, to)
         })        
         
         test('should return success response with expected id', () => {
@@ -40,16 +41,17 @@ describe('votePlayer', () => {
         let result
         const expectedError = faker.random.uuid()
         let gameId = faker.random.uuid()
-        let userId = faker.random.uuid()
+        let from = faker.random.uuid()
+        let to = faker.random.uuid()
         beforeAll(async () => {
             sqlDataSource.votePlayer.mockReset()
             sqlDataSource.votePlayer.mockRejectedValue(expectedError)
             mockErrorLogger.mockReset()
             //@ts-ignore
-            result = await votePlayer(sqlDataSource, gameId, userId)
+            result = await votePlayer(sqlDataSource, gameId, from, to)
         })
         test('should call database', () => {
-            expect(sqlDataSource.votePlayer).toHaveBeenCalledWith(gameId, userId)
+            expect(sqlDataSource.votePlayer).toHaveBeenCalledWith(gameId, from, to)
         })        
         
         test('should call error logger with error', () => {

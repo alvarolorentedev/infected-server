@@ -88,9 +88,11 @@ describe('sqlDatabase', () => {
 
         test('should have game started', async () => {
             const game = await subject.getGameById(gameId)
+            const round = game.rounds.pop()
             expect(game.id).toEqual(gameId)
             expect(game.status).toEqual(GameStatus.Started)
             expect(game.round).toEqual(RoundStatus.Join)
+            expect(round).toEqual({type: RoundStatus.Join, votes: []})
         })
 
         test('should not be able to start game that is already started', async () => {
@@ -103,22 +105,61 @@ describe('sqlDatabase', () => {
 
         test('when join vote state not allow vote to infected players', async () => {
             try {
-                await subject.votePlayer(gameId, userId2)
+                await subject.votePlayer(gameId, userId2, userId)
                 fail()     
             } catch (error) {           
             }
         })
 
         test('when join state allow vote from infected players', async () => {
-                await subject.votePlayer(gameId, userId)
+                await subject.votePlayer(gameId, userId, userId2)
         })
 
-
-        test('game should be state in join game ', async () => {
+        test('game should stay in join state with the created vote', async () => {
             const game = await subject.getGameById(gameId)
-            expect(game.id).toEqual(gameId)
+            const round = game.rounds.pop()
+            expect(round).toEqual({type: RoundStatus.Join, votes: [{from: userId, to: userId2}]})
+        })
+
+        test('when join state allow vote from other infected players', async () => {
+                await subject.votePlayer(gameId, userId4, userId2)
+        })
+
+        test('when all infected have voted a new round starts and a the most voted player is quarentained', async () => {
+            const game = await subject.getGameById(gameId)
+            const quarentainedPlayer = game.players.find(player => player.name === userId2)
+            const newRound = game.rounds.pop()
+            const roundJoin = game.rounds.pop()
+            expect(roundJoin).toEqual({type: RoundStatus.Join, votes: [{from: userId, to: userId2}, {from: userId4, to: userId2}]})
+            expect(newRound).toEqual({type: RoundStatus.Separated, votes: []})
+            expect(quarentainedPlayer.status).toEqual(PlayerStatus.Quarentained)
             expect(game.status).toEqual(GameStatus.Started)
-            expect(game.round).toEqual(RoundStatus.Join)
+        })
+
+        test('game should stay in separated state with the first created', async () => {
+            await subject.votePlayer(gameId, userId, userId3)
+            const game = await subject.getGameById(gameId)
+            const round = game.rounds.pop()
+            expect(round).toEqual({type: RoundStatus.Separated, votes: [{from: userId, to: userId3}]})
+        })
+
+        test('game should stay in separated state with the second created', async () => {
+            await subject.votePlayer(gameId, userId4, userId3)
+            const game = await subject.getGameById(gameId)
+            const round = game.rounds.pop()
+            expect(round).toEqual({type: RoundStatus.Separated, votes: [{from: userId, to: userId3}, {from: userId4, to: userId3}]})
+        })
+
+        test('game should move to join state with the last vote', async () => {
+            await subject.votePlayer(gameId, userId3, userId)
+            const game = await subject.getGameById(gameId)
+            const quarentainedPlayer = game.players.find(player => player.name === userId3)
+            const newRound = game.rounds.pop()
+            const roundJoin = game.rounds.pop()
+            expect(roundJoin).toEqual({type: RoundStatus.Separated, votes: [{from: userId, to: userId3}, {from: userId4, to: userId3}, {from: userId3, to: userId}]})
+            expect(newRound).toEqual({type: RoundStatus.Join, votes: []})
+            expect(quarentainedPlayer.status).toEqual(PlayerStatus.Quarentained)
+            expect(game.status).toEqual(GameStatus.Ended)
         })
     })
 })

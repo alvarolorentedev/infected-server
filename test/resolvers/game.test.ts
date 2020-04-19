@@ -31,6 +31,8 @@ import * as faker from "faker"
 describe('game resolvers', () => {
     const gameId = faker.random.uuid()
     const userId = faker.random.uuid()
+    const from = faker.random.uuid()
+    const to = faker.random.uuid()
     const dataSources = {
         sqlAPI: faker.random.uuid()
     }
@@ -66,8 +68,8 @@ describe('game resolvers', () => {
         })
 
         test('should have start game that calls sqlDatabase with parameters', async () => {
-            await resolvers.Mutation.votePlayer(undefined, { gameId, userId }, { dataSources })
-            expect(mockVotePlayer).toHaveBeenCalledWith(dataSources.sqlAPI, gameId, userId)
+            await resolvers.Mutation.votePlayer(undefined, { gameId, from, to }, { dataSources })
+            expect(mockVotePlayer).toHaveBeenCalledWith(dataSources.sqlAPI, gameId, from, to)
         })
         
     })
