@@ -1,3 +1,0 @@
-type GameJoinResponse {
-    success: Boolean!
-}

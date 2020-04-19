@@ -1,6 +1,6 @@
 # import Game from "game.graphql"
 # import GameCreateResponse from "gameCreateResponse.graphql"
-# import GameJoinResponse from "gameJoinResponse.graphql"
+# import SimpleResponse from "simpleResponse.graphql"
 
 type Query {
     game(id: String): Game
@@ -8,5 +8,6 @@ type Query {
 
 type Mutation {
     createGame: GameCreateResponse!
-    joinGame(gameId: String!, userId: String!): GameJoinResponse!
+    joinGame(gameId: String!, userId: String!): SimpleResponse!
+    startGame(gameId: String!): SimpleResponse!
 }
