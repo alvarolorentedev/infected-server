@@ -33,7 +33,7 @@ export default class sqlDatabase extends SQLDataSource {
         if(gameStatus.players.some(player => player.name === userId ))
             return Promise.reject("This player is already in the game")
         const infected = gameStatus.players.filter(player => player.card === Card.Infected).length
-        gameStatus.players.push({ name: userId, status: PlayerStatus.Free,card: deal({ infected, total: gameStatus.players.length}) })
+        gameStatus.players.push({ name: userId, status: PlayerStatus.Free, card: deal({ infected, total: gameStatus.players.length}) })
         await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
     } 
 
@@ -45,4 +45,13 @@ export default class sqlDatabase extends SQLDataSource {
         gameStatus.round = RoundStatus.Join
         await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
     } 
+
+    public async votePlayer(gameId: string, userId: string): Promise<void> {
+        const gameStatus = await this.getGameById(gameId)
+        const votedPlayer = gameStatus.players.find(player => player.name === userId)
+        if(votedPlayer.card !== Card.Infected)
+            return Promise.reject("game has already started")
+        return Promise.resolve()
+    } 
+
 }

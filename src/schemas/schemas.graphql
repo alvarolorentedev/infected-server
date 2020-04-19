@@ -10,4 +10,5 @@ type Mutation {
     createGame: GameCreateResponse!
     joinGame(gameId: String!, userId: String!): SimpleResponse!
     startGame(gameId: String!): SimpleResponse!
+    votePlayer(gameId: String!, userId: String!): SimpleResponse!
 }

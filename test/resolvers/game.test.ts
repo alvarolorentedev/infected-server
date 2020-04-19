@@ -1,6 +1,7 @@
 const mockCreateGame = jest.fn()
 const mockJoinGame = jest.fn()
 const mockStartGame = jest.fn()
+const mockVotePlayer = jest.fn()
 const mockGameWithId = jest.fn()
 
 jest.mock('../../src/queries/gameWithId', () => ({
@@ -18,6 +19,10 @@ jest.mock('../../src/commands/createGame', () => ({
 jest.mock('../../src/commands/startGame', () => ({
     __esModule: true,
     default: mockStartGame
+}))
+jest.mock('../../src/commands/votePlayer', () => ({
+    __esModule: true,
+    default: mockVotePlayer
 }))
 
 import resolvers from '../../src/resolvers/game'
@@ -58,6 +63,11 @@ describe('game resolvers', () => {
         test('should have start game that calls sqlDatabase with parameters', async () => {
             await resolvers.Mutation.startGame(undefined, { gameId }, { dataSources })
             expect(mockStartGame).toHaveBeenCalledWith(dataSources.sqlAPI, gameId)
+        })
+
+        test('should have start game that calls sqlDatabase with parameters', async () => {
+            await resolvers.Mutation.votePlayer(undefined, { gameId, userId }, { dataSources })
+            expect(mockVotePlayer).toHaveBeenCalledWith(dataSources.sqlAPI, gameId, userId)
         })
         
     })

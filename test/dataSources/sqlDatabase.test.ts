@@ -35,6 +35,8 @@ describe('sqlDatabase', () => {
         let gameId: string
         let userId: string = faker.random.uuid()
         let userId2: string = faker.random.uuid()
+        let userId3: string = faker.random.uuid()
+        let userId4: string = faker.random.uuid()
         test('should return an id', async () => {
             gameId = await subject.createGame()
             expect(gameId).toBeTruthy()
@@ -54,10 +56,15 @@ describe('sqlDatabase', () => {
             }
         })
 
-        test('should allow to join with other same userId', async () => {
+        test('should allow to join other players', async () => {
             mockDeal.mockReturnValue(Card.Healthy)
             await subject.joinGame(gameId, userId2)
             expect(mockDeal).toHaveBeenCalledWith({infected: 1, total: 1})
+            await subject.joinGame(gameId, userId3)
+            expect(mockDeal).toHaveBeenCalledWith({infected: 1, total: 2})
+            mockDeal.mockReturnValue(Card.Infected)
+            await subject.joinGame(gameId, userId4)
+            expect(mockDeal).toHaveBeenCalledWith({infected: 1, total: 3})
         })
 
         test('should be able to return game with correct data', async () => {
@@ -67,6 +74,8 @@ describe('sqlDatabase', () => {
             expect(game.round).toEqual(RoundStatus.Other)
             expect(game.players[0]).toEqual({name: userId, status: PlayerStatus.Free, card: Card.Infected})
             expect(game.players[1]).toEqual({name: userId2, status: PlayerStatus.Free, card: Card.Healthy})
+            expect(game.players[2]).toEqual({name: userId3, status: PlayerStatus.Free, card: Card.Healthy})
+            expect(game.players[3]).toEqual({name: userId4, status: PlayerStatus.Free, card: Card.Infected})
         })
 
         test('should be able to start game that exist', async () => {
@@ -77,14 +86,11 @@ describe('sqlDatabase', () => {
             }
         })
 
-
         test('should have game started', async () => {
             const game = await subject.getGameById(gameId)
             expect(game.id).toEqual(gameId)
             expect(game.status).toEqual(GameStatus.Started)
             expect(game.round).toEqual(RoundStatus.Join)
-            expect(game.players[0]).toEqual({name: userId, status: PlayerStatus.Free, card: Card.Infected})
-            expect(game.players[1]).toEqual({name: userId2, status: PlayerStatus.Free, card: Card.Healthy})
         })
 
         test('should not be able to start game that is already started', async () => {
@@ -93,6 +99,26 @@ describe('sqlDatabase', () => {
                 fail()     
             } catch (error) {           
             }
+        })
+
+        test('when join vote state not allow vote to infected players', async () => {
+            try {
+                await subject.votePlayer(gameId, userId2)
+                fail()     
+            } catch (error) {           
+            }
+        })
+
+        test('when join state allow vote from infected players', async () => {
+                await subject.votePlayer(gameId, userId)
+        })
+
+
+        test('game should be state in join game ', async () => {
+            const game = await subject.getGameById(gameId)
+            expect(game.id).toEqual(gameId)
+            expect(game.status).toEqual(GameStatus.Started)
+            expect(game.round).toEqual(RoundStatus.Join)
         })
     })
 })
