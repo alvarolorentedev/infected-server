@@ -6,6 +6,7 @@ import { PlayerStatus } from "../types/playerStatus"
 import { GameStatus } from "../types/gameStatus"
 import { Game } from "../types/game"
 import deal from "../utils/deal"
+import { RoundStatus } from "../types/roundStatus"
 
 export default class sqlDatabase extends SQLDataSource {
     constructor(config: any){
@@ -22,7 +23,7 @@ export default class sqlDatabase extends SQLDataSource {
     
     public async createGame(): Promise<string> {
         const id = v4()
-        const status = JSON.stringify({ id, status: GameStatus.NotStarted, players: [] })
+        const status = JSON.stringify({ id, status: GameStatus.NotStarted, round: RoundStatus.Other, players: [] })
         await this.db.insert({id, status}).into('GAME')
         return id
     }
@@ -30,9 +31,18 @@ export default class sqlDatabase extends SQLDataSource {
     public async joinGame(gameId: string, userId: string): Promise<void> {
         const gameStatus = await this.getGameById(gameId)
         if(gameStatus.players.some(player => player.name === userId ))
-            throw new Error("This player is already in the game")
+            return Promise.reject("This player is already in the game")
         const infected = gameStatus.players.filter(player => player.card === Card.Infected).length
-        gameStatus.players.push({ name: userId, status: PlayerStatus.Free, card: deal({ infected, total: gameStatus.players.length}) })
+        gameStatus.players.push({ name: userId, status: PlayerStatus.Free,card: deal({ infected, total: gameStatus.players.length}) })
+        await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
+    } 
+
+    public async startGame(gameId: string): Promise<void> {
+        const gameStatus = await this.getGameById(gameId)
+        if(gameStatus.status !== GameStatus.NotStarted)
+            return Promise.reject("game has already started")
+        gameStatus.status = GameStatus.Started
+        gameStatus.round = RoundStatus.Join
         await this.db('GAME').where({ id: gameId }).update({ status: JSON.stringify(gameStatus) })
     } 
 }

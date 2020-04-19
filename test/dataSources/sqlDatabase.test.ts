@@ -10,6 +10,7 @@ import * as faker from "faker"
 import { Card } from '../../src/types/card'
 import { GameStatus } from '../../src/types/gameStatus';
 import { PlayerStatus } from '../../src/types/playerStatus';
+import { RoundStatus } from '../../src/types/roundStatus';
 
 describe('sqlDatabase', () => {
     const config = {
@@ -63,8 +64,35 @@ describe('sqlDatabase', () => {
             const game = await subject.getGameById(gameId)
             expect(game.id).toEqual(gameId)
             expect(game.status).toEqual(GameStatus.NotStarted)
+            expect(game.round).toEqual(RoundStatus.Other)
             expect(game.players[0]).toEqual({name: userId, status: PlayerStatus.Free, card: Card.Infected})
             expect(game.players[1]).toEqual({name: userId2, status: PlayerStatus.Free, card: Card.Healthy})
+        })
+
+        test('should be able to start game that exist', async () => {
+            try {
+                await subject.startGame(gameId)
+            } catch (error) {
+                fail()                
+            }
+        })
+
+
+        test('should have game started', async () => {
+            const game = await subject.getGameById(gameId)
+            expect(game.id).toEqual(gameId)
+            expect(game.status).toEqual(GameStatus.Started)
+            expect(game.round).toEqual(RoundStatus.Join)
+            expect(game.players[0]).toEqual({name: userId, status: PlayerStatus.Free, card: Card.Infected})
+            expect(game.players[1]).toEqual({name: userId2, status: PlayerStatus.Free, card: Card.Healthy})
+        })
+
+        test('should not be able to start game that is already started', async () => {
+            try {
+                await subject.startGame(gameId)
+                fail()     
+            } catch (error) {           
+            }
         })
     })
 })

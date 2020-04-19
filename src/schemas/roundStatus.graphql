@@ -1,0 +1,5 @@
+enum RoundStatus {
+  Separated
+  Join
+  Other
+}
